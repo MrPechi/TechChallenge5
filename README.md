@@ -32,7 +32,62 @@ O STRIDE Vision automatiza esse processo:
 
 ---
 
+## 🛠️ Tecnologias Utilizadas
+
+| Tecnologia | Finalidade |
+|------------|------------|
+| **YOLOv8** | Detecção de componentes em diagramas |
+| **Claude (Anthropic)** | Análise de ameaças e geração de relatório |
+| **GPT-4o (OpenAI)** | Alternativa para análise de ameaças |
+| **WeasyPrint** | Conversão de Markdown para PDF |
+| **Google Colab** | Ambiente de execução |
+
+---
+
+## 📦 Instalação
+
+O projeto foi desenvolvido para rodar no **Google Colab**.   
+Basta abrir o notebook e executar as células.
+
+---
+
 ## 🔄 Fluxo de Funcionamento
+
+### Fluxo de Treinamento do Modelo
+
+> ⚠️ **Requisito**: GPU é necessária para treinamento. No Google Colab, vá em `Runtime > Change runtime type > GPU`.
+
+Caso vc queira teinar o modelo com novos ícones/elementos, use a seguinte estrutura:
+```
+icons.zip
+├── aws/
+│   ├── EC2.png
+│   ├── S3.png
+│   └── ...
+├── azure/
+│   ├── VirtualMachine.png
+│   └── ...
+└── outro-provedor/
+    ├── Componentes.png
+    └── ...
+```
+
+```mermaid
+flowchart LR
+    A[🖼️ Descompacta os Ícones] --> B[🏷️ Anotação dos Componentes]
+    B --> C[📂 Cria Diagramas Sintéticos]
+    C --> D[⚙️ Configuração do YOLO]
+    D --> E[🚀 Treinamento]
+    E --> F{📊 Avaliação}
+    F -->|Métricas OK| G[💾 Salvar Modelo]
+    F -->|Ajustar| D
+    G --> H[✅ Modelo Pronto para Uso]
+
+    subgraph "Requer GPU"
+        E
+        F
+    end
+```
 
 ### Fluxo de Uso (Inferência)
 ```mermaid
@@ -54,70 +109,6 @@ flowchart LR
         E
     end
 ```
-
-### Fluxo de Treinamento do Modelo
-```mermaid
-flowchart LR
-    A[🖼️ Coleta de Diagramas] --> B[🏷️ Anotação dos Componentes]
-    B --> C[📂 Preparação do Dataset]
-    C --> D[⚙️ Configuração do YOLO]
-    D --> E[🚀 Treinamento]
-    E --> F{📊 Avaliação}
-    F -->|Métricas OK| G[💾 Salvar Modelo]
-    F -->|Ajustar| D
-    G --> H[✅ Modelo Pronto para Uso]
-
-    subgraph "Requer GPU"
-        E
-        F
-    end
-```
-
----
-
-## 🛠️ Tecnologias Utilizadas
-
-| Tecnologia | Finalidade |
-|------------|------------|
-| **YOLOv8** | Detecção de componentes em diagramas |
-| **Claude (Anthropic)** | Análise de ameaças e geração de relatório |
-| **GPT-4o (OpenAI)** | Alternativa para análise de ameaças |
-| **WeasyPrint** | Conversão de Markdown para PDF |
-| **Google Colab** | Ambiente de execução |
-| **ipywidgets** | Interface interativa |
-
----
-
-## 📦 Instalação
-
-O projeto foi desenvolvido para rodar no **Google Colab**. Basta abrir o notebook e executar as células.
-
-### Dependências
-```bash
-pip install anthropic openai markdown2 weasyprint ultralytics opencv-python
-```
-
----
-
-## 🚀 Como Usar
-
-1. **Abra o notebook** no Google Colab
-
-2. **Configure as chaves de API**
-   - Anthropic API Key (para usar Claude)
-   - OpenAI API Key (para usar GPT-4)
-
-3. **Faça upload do diagrama de arquitetura**
-   - Formatos suportados: PNG, JPG, JPEG
-
-4. **Aguarde a detecção dos componentes**
-   - O modelo YOLO identificará os componentes automaticamente
-
-5. **Selecione o modelo de IA** (Claude ou GPT)
-
-6. **Gere o relatório**
-   - O PDF será gerado automaticamente com a análise STRIDE completa
-
 ---
 
 ## 📊 Estrutura do Relatório
@@ -157,8 +148,8 @@ O relatório gerado inclui:
 
 | Cenário | GPU Necessária? |
 |---------|-----------------|
-| **Usar modelo treinado** (inferência) | ❌ Não - CPU é suficiente |
 | **Treinar novo modelo** | ✅ Sim - Recomendado GPU |
+| **Usar modelo treinado** (inferência) | ❌ Não - CPU é suficiente |
 
 ---
 
