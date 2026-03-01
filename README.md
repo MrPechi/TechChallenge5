@@ -33,23 +33,44 @@ O STRIDE Vision automatiza esse processo:
 ---
 
 ## 🔄 Fluxo de Funcionamento
-### Para o treinamento
+
+### Fluxo de Uso (Inferência)
 ```mermaid
-flowchart TD
-    A[Christmas] -->|Get money| B(Go shopping)
-    B --> C{Let me think}
-    C -->|One| D[Laptop]
-    C -->|Two| E[iPhone]
-    C -->|Three| F[fa:fa-car Car]
-  
+flowchart LR
+    A[📤 Upload do Diagrama] --> B[🔍 Detecção de Componentes]
+    B --> C{🤖 Escolha do Modelo}
+    C -->|Claude| D[Análise STRIDE - Claude]
+    C -->|GPT-4| E[Análise STRIDE - GPT-4]
+    D --> F[📄 Geração do PDF]
+    E --> F
+    F --> G[📥 Download do Relatório]
+
+    subgraph "Visão Computacional"
+        B
+    end
+
+    subgraph "IA Generativa"
+        D
+        E
+    end
 ```
-### Para o uso
-```
-┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐     ┌─────────────┐
-│  Upload do      │────▶│  Detecção de     │────▶│  Análise STRIDE │────▶│  Relatório  │
-│  Diagrama       │     │  Componentes     │     │  com IA         │     │  PDF        │
-│  (imagem)       │     │  (YOLO)          │     │  (Claude/GPT)   │     │             │
-└─────────────────┘     └──────────────────┘     └─────────────────┘     └─────────────┘
+
+### Fluxo de Treinamento do Modelo
+```mermaid
+flowchart LR
+    A[🖼️ Coleta de Diagramas] --> B[🏷️ Anotação dos Componentes]
+    B --> C[📂 Preparação do Dataset]
+    C --> D[⚙️ Configuração do YOLO]
+    D --> E[🚀 Treinamento]
+    E --> F{📊 Avaliação}
+    F -->|Métricas OK| G[💾 Salvar Modelo]
+    F -->|Ajustar| D
+    G --> H[✅ Modelo Pronto para Uso]
+
+    subgraph "Requer GPU"
+        E
+        F
+    end
 ```
 
 ---
